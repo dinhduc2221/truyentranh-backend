@@ -3,11 +3,11 @@ import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
 
-const dbName = process.env.DB_NAME || process.env.MYSQLDATABASE;
-const dbUser = process.env.DB_USER || process.env.MYSQLUSER;
-const dbPass = process.env.DB_PASS || process.env.MYSQLPASSWORD;
-const dbHost = process.env.DB_HOST || process.env.MYSQLHOST;
-const dbPort = Number(process.env.DB_PORT || process.env.MYSQLPORT || 3306);
+const dbName = process.env.MYSQLDATABASE || process.env.DB_NAME;
+const dbUser = process.env.MYSQLUSER || process.env.DB_USER;
+const dbPass = process.env.MYSQLPASSWORD || process.env.DB_PASS;
+const dbHost = process.env.MYSQLHOST || process.env.DB_HOST;
+const dbPort = Number(process.env.MYSQLPORT || process.env.DB_PORT || 3306);
 const connectionUrl = process.env.DATABASE_URL || process.env.MYSQL_URL;
 
 const baseOptions = {
