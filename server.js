@@ -20,6 +20,14 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const DEFAULT_CORS_ORIGINS = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://truyentranh-six.vercel.app",
+];
+const CORS_ORIGINS = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(",").map((origin) => origin.trim()).filter(Boolean)
+  : DEFAULT_CORS_ORIGINS;
 
 // Enable gzip
 app.use(compression());
@@ -27,14 +35,7 @@ app.use(compression());
 // CORS
 app.use(
   cors({
-    origin: [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "https://truyentranh-lalatina.vercel.app",
-  "https://truyentranh-murex.vercel.app",
-  "https://truyentranh-git-main-lalatina.vercel.app",
-
-],
+    origin: CORS_ORIGINS,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
