@@ -25,14 +25,17 @@ const DEFAULT_CORS_ORIGINS = [
   "http://localhost:5174",
   "https://truyentranh-six.vercel.app",
 ];
-const CORS_ORIGINS = process.env.CORS_ORIGINS
+const ENV_CORS_ORIGINS = process.env.CORS_ORIGINS
   ? process.env.CORS_ORIGINS.split(",").map((origin) => origin.trim()).filter(Boolean)
-  : DEFAULT_CORS_ORIGINS;
+  : [];
+const CORS_ORIGINS = [...new Set([...DEFAULT_CORS_ORIGINS, ...ENV_CORS_ORIGINS])];
 const corsOptions = {
   origin(origin, callback) {
     // Allow server-to-server or curl requests without Origin header
     if (!origin) return callback(null, true);
     if (CORS_ORIGINS.includes(origin)) return callback(null, true);
+    // Allow Vercel preview domains without manual env updates each deploy.
+    if (/^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin)) return callback(null, true);
     return callback(new Error(`CORS blocked for origin: ${origin}`));
   },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
