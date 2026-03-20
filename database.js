@@ -7,6 +7,7 @@ const hasManualDbConfig = Boolean(
   process.env.DB_HOST && process.env.DB_USER && process.env.DB_NAME
 );
 const useSsl = process.env.DB_SSL === "true";
+const dbFamily = Number(process.env.DB_FAMILY || 4);
 
 // Priority order:
 // 1) DATABASE_URL (if explicitly set)
@@ -35,6 +36,7 @@ const baseOptions = {
   dialect: "mysql",
   logging: false,
   dialectOptions: {
+    family: dbFamily,
     ssl: useSsl ? { rejectUnauthorized: false } : undefined,
   },
 };
