@@ -36,7 +36,8 @@ const corsOptions = {
     if (CORS_ORIGINS.includes(origin)) return callback(null, true);
     // Allow Vercel preview domains without manual env updates each deploy.
     if (/^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin)) return callback(null, true);
-    return callback(new Error(`CORS blocked for origin: ${origin}`));
+    // During public testing, do not hard-block unknown origins to avoid browser-side CORS failures.
+    return callback(null, true);
   },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
