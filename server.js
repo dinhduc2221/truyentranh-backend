@@ -28,18 +28,25 @@ const DEFAULT_CORS_ORIGINS = [
 const CORS_ORIGINS = process.env.CORS_ORIGINS
   ? process.env.CORS_ORIGINS.split(",").map((origin) => origin.trim()).filter(Boolean)
   : DEFAULT_CORS_ORIGINS;
+const corsOptions = {
+  origin(origin, callback) {
+    // Allow server-to-server or curl requests without Origin header
+    if (!origin) return callback(null, true);
+    if (CORS_ORIGINS.includes(origin)) return callback(null, true);
+    return callback(new Error(`CORS blocked for origin: ${origin}`));
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
 // Enable gzip
 app.use(compression());
 
 // CORS
 app.use(
-  cors({
-    origin: CORS_ORIGINS,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  cors(corsOptions)
 );
+app.options("*", cors(corsOptions));
 
 // Parse JSON
 app.use(express.json());
