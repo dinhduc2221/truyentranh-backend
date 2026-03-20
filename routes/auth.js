@@ -53,6 +53,13 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ success: false, message: "Sai tài khoản hoặc mật khẩu" });
     }
 
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({
+        success: false,
+        message: "Server chưa cấu hình JWT_SECRET",
+      });
+    }
+
     const token = jwt.sign(
       { id: user.id, username: user.username, role: user.role },
       process.env.JWT_SECRET,
