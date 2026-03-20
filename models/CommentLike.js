@@ -11,7 +11,7 @@ export const CommentLike = sequelize.define(
   },
   {
     timestamps: true,
-    tableName: "CommentLikes",
+    tableName: "commentlikes",
     indexes: [
       {
         unique: true,

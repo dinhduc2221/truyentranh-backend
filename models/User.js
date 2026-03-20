@@ -18,5 +18,6 @@ export const User = sequelize.define("User", {
   badge: { type: DataTypes.STRING },
   isBanned: { type: DataTypes.BOOLEAN, defaultValue: false },
 }, { 
+  tableName: "users",
   timestamps: true,
 });

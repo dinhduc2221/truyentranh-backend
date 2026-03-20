@@ -8,4 +8,7 @@ export const Comic = sequelize.define("Comic", {
   followers: { type: DataTypes.INTEGER, defaultValue: 0 },
   views: { type: DataTypes.INTEGER, defaultValue: 0 },
   rating: { type: DataTypes.INTEGER, defaultValue: 0 },
+}, {
+  tableName: "comics",
+  timestamps: true,
 });

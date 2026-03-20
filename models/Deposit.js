@@ -49,6 +49,7 @@ export const Deposit = sequelize.define(
   },
   {
     timestamps: true,
+    tableName: "deposits",
   }
 );
 

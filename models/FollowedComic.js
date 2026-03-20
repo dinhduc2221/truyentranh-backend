@@ -5,4 +5,7 @@ import { sequelize } from "../database.js";
 export const FollowedComic = sequelize.define("FollowedComic", {
   userId: { type: DataTypes.INTEGER, allowNull: false },
   comicSlug: { type: DataTypes.STRING, allowNull: false },
-}, { timestamps: true });
+}, {
+  tableName: "followedcomics",
+  timestamps: true,
+});

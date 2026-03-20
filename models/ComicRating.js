@@ -28,7 +28,7 @@ export const ComicRating = sequelize.define("ComicRating", {
   },
 }, {
   timestamps: true,
-  tableName: "ComicRatings",
+  tableName: "comicratings",
 });
 
 // Associations
